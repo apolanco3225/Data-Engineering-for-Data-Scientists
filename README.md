@@ -1,5 +1,13 @@
 # Disaster Response Pipeline Project
 
+
+In this project, we will develop a model to classify messages transmitted during disaster events. The messages will be sorted into 36 pre-defined categories, including but not limited to Aid Related, Medical Help, and Search and Rescue. By accurately classifying these messages, we can ensure they are directed to the appropriate disaster response agencies. This project encompasses the creation of a basic ETL (Extract, Transform, Load) and Machine Learning pipeline to streamline the classification process. Given that a single message can fall into multiple categories, this is a multi-label classification task. We will utilize a dataset provided by Figure Eight, which includes real messages sent during past disaster scenarios.
+
+Additionally, this project features a web application where users can input a message and receive classification results in real-time.
+
+
+
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
