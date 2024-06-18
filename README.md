@@ -35,6 +35,8 @@ Additionally, this project features a web application where users can input a me
         `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
     - To run ML pipeline that trains classifier and saves
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
+    - To run Flask app
+        `python app/run.py`
 
 2. Go to `app` directory: `cd app`
 
