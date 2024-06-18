@@ -27,6 +27,16 @@ from sklearn.model_selection import GridSearchCV
 
 
 def load_data(database_filepath):
+    """
+    This function receives the path of the database, 
+    reads the data and returns it in form of a DataFrame.
+    Input:
+    - database_filepath (str): path of database.
+    Output:
+    - features (DataFrame): predictors of machine learning model.
+    - labels (DataFrame): labels for predictors.
+    - categories (list): tags for output labels.
+    """
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql_table('ETL', engine)
     labels = df.pop("genre")
@@ -39,6 +49,13 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    Lemmatize input text and convert into tokens.
+    Input
+    - text (str): input emergency text.
+    Output 
+    - clean_tokens (list) list of tokens for input text.
+    """
     url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     # create a list of urls found in input text
     detected_urls = re.findall(url_regex, text)
@@ -62,6 +79,17 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    This function creates a pipeline preprocessing input 
+    data that goes into a random forest classifier. Then 
+    gets parameters that will be applied in a grid search
+    to find the best prameters in order to create the best 
+    model possible.
+    Input:
+    - None
+    Ouput:
+    - cv (sklearn.pipeline): complete machine learning pipeline.
+    """
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
@@ -84,7 +112,15 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    
+    """
+    Reveives the model, test predictors, test labels and categories
+    and returns f1 score of the model.
+    Inputs:
+    - model (sklean.model): trained model.
+    - X_test (np.array): test features.
+    - Y_test (np.array): test labels.
+    - category_names (list): list of labels categories.
+    """
     test_preds = model.predict(X_test)
     test_f1_score = f1_score(test_preds, Y_test.values, average=None)
     
@@ -92,6 +128,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Saves model in a path.
+    Input:
+    - model (sklearn.model): trained model.
+    - model_filepath (string): model path.
+    Output:
+    None
+    """
     joblib.dump(model, model_filepath)
 
 
