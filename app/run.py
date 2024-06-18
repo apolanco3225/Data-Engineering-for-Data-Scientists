@@ -43,6 +43,20 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+    # second plot
+    columns_names = df.columns.tolist()
+    columns_names.remove("message")
+    columns_names.remove("original")
+    columns_names.remove("genre")
+    columns_names.remove("id")
+
+    predictors = df[columns_names]
+    predictors = predictors.astype(int)
+    predictors = predictors.sum(axis=0).sort_values(ascending=False)
+    predictors_names = predictors.index
+    predictors_sum = predictors.values
+
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -56,12 +70,30 @@ def index():
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': f'Distribution of Message Genres....',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+{
+            'data': [
+                Bar(
+                    x=predictors_names,
+                    y=predictors_sum
+                )   
+            ],
+
+            'layout': {
+                'title': f'Distribution of Numerical Predictors',
+                'yaxis': {
+                    'title': "Sum"
+                },
+                'xaxis': {
+                    'title': "Numerical Predictors"
                 }
             }
         }
@@ -73,6 +105,7 @@ def index():
     
     # render web page with plotly graphs
     return render_template('master.html', ids=ids, graphJSON=graphJSON)
+
 
 
 # web page that handles user query and displays model results
@@ -94,7 +127,7 @@ def go():
 
 
 def main():
-    app.run(host='0.0.0.0', port=4000, debug=True)
+    app.run(host='0.0.0.0', port=9000, debug=True)
 
 
 if __name__ == '__main__':
