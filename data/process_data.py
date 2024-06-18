@@ -44,11 +44,13 @@ def clean_data(df):
     Input:
     - df (DataFrame): input dataframe.
     Output:
-    - df (DataFrame): clean dataframe without duplicates.
+    - clean_df (DataFrame): clean dataframe without duplicates.
     """
-    df.drop_duplicates(inplace=True)
+    clean_df = df.query("related != '2'")
 
-    return df
+    clean_df.drop_duplicates(inplace=True)
+
+    return clean_df
 
 
 def save_data(df, database_filename):
