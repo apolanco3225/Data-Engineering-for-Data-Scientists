@@ -5,6 +5,16 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    This function receives the path for messages
+    and categories dataset, then process it in order
+    to merge them.
+    inputs:
+    - messages_filepath (str): path to messages dataset
+    - categories_filepath (str): path to categories
+    Outputs:
+    - data (DataFrame): merged dataset
+    """
     # load data in DataFrames
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
@@ -28,12 +38,28 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    This function cleans data by dropping duplicates
+    from the merge dataset.
+    Input:
+    - df (DataFrame): input dataframe.
+    Output:
+    - df (DataFrame): clean dataframe without duplicates.
+    """
     df.drop_duplicates(inplace=True)
 
     return df
 
 
 def save_data(df, database_filename):
+    """
+    This function receives a DataFrame and a file path
+    and then saves data into a sql dataset in the given
+    path.
+    Inputs:
+    - df (DataFrame) clean dataframe.
+    - database_filename (str) path for storing database.
+    """
     engine = create_engine(f"sqlite:///{database_filename}")
     df.to_sql('ETL', engine, index=False)  
 
