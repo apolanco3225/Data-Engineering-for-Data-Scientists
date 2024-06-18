@@ -61,7 +61,7 @@ def save_data(df, database_filename):
     - database_filename (str) path for storing database.
     """
     engine = create_engine(f"sqlite:///{database_filename}")
-    df.to_sql('ETL', engine, index=False)  
+    df.to_sql('ETL', engine, index=False, if_exists='replace')  
 
 
 
